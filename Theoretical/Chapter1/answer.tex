@@ -1,0 +1,141 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 1}
+
+\author{Shuo Chen 12231064
+  \thanks{Email address: \texttt{shuo\_chen@zju.edu.cn}}}
+\affil{(Electronic Science and Technology), Zhejiang University }
+
+
+\date{Submitted time: \today}
+
+\maketitle
+% ============================================
+\section*{I. The width of the interval in bisection}
+
+\subsection*{I-a}
+According to the bisection method, the interval decreases to half after each step. The initial width of the interval is 2(at the 0th step), so it will be $2^{1-n}$at the $n$th step.
+
+
+\subsection*{I-b}
+At the $n$th step, the width of the interval is $2^{1-n}$, and the midpoint divides the interval into 2 equal parts, each part with a length of $2^{-n}$. Therefore, no matter which part the root is located at, its distance to the midpoint would not greater than the width of the small interval, i.e. $2^{-n}$. So $2^{-n}$ is an upper bound.
+
+In addition, assume that the interval is $\left[a_0,b_0\right]$ with $b_0-a_0=2^{1-n}$ at the $n$th step. Given any $\epsilon > 0$, the root can be located at $b_0-\epsilon$ or $a_0+\epsilon$, and both of them has the distance $2^{-n}-\epsilon$ to the midpoint $\frac{a_0+b_0}{2}$. It is satisfied for all $\epsilon > 0$, so $2^{-n}$ is the supremum.
+\section*{II. Guarantee the relative error}
+Similar to Problem I, we can get that the supremum of absolute error at $n$th step with an initial interval $\left[a_0,b_0\right]$ is $(b_0-a_0)\cdot 2^{-(n+1)}$. And the relative error is $\frac{(b_0-a_0)\cdot 2^{-(n+1)}}{|r|}$. Due to $0 < a0 \leq r$, so if we can guarantee $\epsilon \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{a_0}$, $\epsilon \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{|r|}$ is satisfied naturally.
+
+$$
+\epsilon \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{a_0} \Leftrightarrow n \geq \frac{\log(b_0-a_0)-\log\epsilon-\log a_0}{\log 2} - 1
+$$
+
+\section*{III. 4 iterations of Newton's method}
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+  \hline
+      $n$ & $x_n$ & $p(x_n)$ & $p'(x_n)$ \\ \hline
+      0 & -1 & -3 & 16 \\ \hline
+      1 & -0.8125 & -0.46582 & 11.1719 \\ \hline
+      2 & -0.770804 & -0.0201379 & 10.2129 \\ \hline
+      3 & -0.768832 & $-4.37084\times 10^{-5}$ & 10.1686 \\ \hline
+      4 & -0.768828 & $-2.07412\times 10^{-10}$ & 10.1685 \\ \hline
+  \end{tabular}
+\end{table}
+
+\section*{IV. Newton's method, but only use $f'(x_0)$}
+By Taylor's theorem and $f(\alpha) = 0$, we can get:
+$$
+f(x_n) = f(\alpha) + f'(\alpha)(x_n - \alpha) + \frac{f''(\xi)}{2}(x_n - \alpha)^2 = f'(\alpha)e_n+ \frac{f''(\xi)}{2}e_n^2
+$$
+where $\xi$ is between $\alpha$ and $x_n$.
+Use the iteration formula in the problem:
+$$
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_0)} = x_n - \frac{f'(\alpha)}{f'(x_0)}e_n -\frac{f''(\xi)}{2f'(x_0)}e_n^2
+$$
+Substract $\alpha$ from both sides:
+$$
+e_{n+1} = (1 - \frac{f'(\alpha)}{f'(x_0)})e_n -\frac{f''(\xi)}{2f'(x_0)}e_n^2 = (1 - \frac{f'(\alpha)}{f'(x_0)} - \frac{f''(\xi)}{2f'(x_0)}(x_n-\alpha))e_n
+$$
+Therefore, $s=1$, and $C = 1 - \frac{f'(\alpha)}{f'(x_0)} - \frac{f''(\xi)}{2f'(x_0)}(x_n-\alpha)$ , where $\xi$ is depended on $x_n$ and $\alpha$.
+
+\section*{V. Converge or not ? $x_{n+1} = \tan^{-1}x_n$}
+Without generality, assmume that $x_0 > 0$ ($x_0 = 0$ is a trivial case, i.e. $x_1 = x_2 = \cdots = 0$). With $x_{n+1} = \arctan{x_n} < x_n$ and $x_n > 0$, $ \{ x_n \}$ has a limit $\alpha$.
+
+Therefore,
+$$
+\lim_{n\rightarrow\infty}x_n = \lim_{n\rightarrow\infty}x_{n+1} = \lim_{n\rightarrow\infty}\arctan{x_n} = \alpha
+$$
+$$
+\lim_{n\rightarrow\infty}(\arctan{x_n} - x_n) = \arctan{\alpha} - \alpha = 0
+$$
+then $\alpha = 0$, which means $\{x_n\}$ converge.
+
+\section*{VI. Fixed point}
+According to the problem, we can construct $f(x) = \frac{1}{x+p}$, and getting the value of $x = \frac{1}{p + \frac{1}{p + \frac{1}{p + \cdots}}}$ is equivalent to getting the fixed point of $f(x)$.
+
+Due to $ p > 1$, $x_1 = \frac{1}{p} \in [0,1]$. Then if $x \in [0,1]$, $f(x) \in [0,1]$.
+
+In addition, since $p > 1$, $\exists \epsilon > 0$, s.t. $p > 1+\epsilon$. Then $|f'(x)| = \frac{1}{(x+p)^2} < \frac{1}{(1+\epsilon)^2}$ for all $x \in [0,1]$.
+
+Let $\lambda = \frac{1}{(1+\epsilon)^2}$, then for $\forall x, y \in [0,1]$, $|f(x) - f(y)| \leq \lambda|x - y|$. Therefore, $f$ is a contractive mapping on $[0,1]$.
+
+For the fixed point $\alpha$, it should satisfy:$\alpha = f(\alpha) = \frac{1}{\alpha + p}$.
+
+Then we get $\alpha = \frac{-p+\sqrt{p^2+4}}{2}$(negative value is unreasonable).
+
+\section*{VII. Is relative error always a good measure?}
+According to problem II, the relative error is $\frac{(b_0-a_0)\cdot 2^{-(n+1)}}{|r|}$. But in the case $a_0 < 0 < b_0, r \in [a_0,b_0]$, $|r|$ does not have a positive lower bound any more.
+
+By instead $|r|$ with $b_0$ , we can get  $\frac{(b_0-a_0)\cdot 2^{-(n+1)}}{|r|} \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{b_0}$.
+
+Similar to problem II, by using $\epsilon \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{b_0}$, we have $n \geq \frac{\log(b_0-a_0)-\log\epsilon-\log b_0}{\log 2} - 1$.
+
+However, it is just a necessary condition, not sufficient. Because $\epsilon \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{b_0}$ is not sufficient to indicate $\epsilon \leq \frac{(b_0-a_0)\cdot 2^{-(n+1)}}{|r|}$.
+
+This way of approximation of relative is not reliable, and its accuracy would be worse as $|r|$ vanishes. In a extreme case, i.e. $r = 0$, relative error has no meaning at all.
+
+\section*{VIII. Multiple zero of Newton's method}
+
+\subsection*{VIII-a}
+Assume that $\alpha$ is a $p$-th multiple zero of $f(x)$, then it can be written as $f(x) = (x-\alpha)^p g(x)$, where $g'(\alpha) \neq 0$.\cite{atkinson1991introduction}
+
+According to Newton's method, $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$. It can be seen as a fixed-point problem, with $h(x) = x - \frac{f(x)}{f'(x)}$.
+
+Then iterate it into the first formula:
+$$
+f'(x) = (x-\alpha)^p g'(x) + p(x-\alpha)^{p-1}g(x)
+$$
+$$
+h(x) = x - \frac{(x-\alpha)g(x)}{pg(x)+(x-\alpha)g'(x)}
+$$
+$$
+h'(x) = 1 - \frac{g(x)}{pg(x)-(x-\alpha)g'(x)} - (x - \alpha)\frac{d}{dx}(\frac{g(x)}{pg(x)+(x-\alpha)g'(x)})
+$$
+Therefore, $h'(\alpha) = 1 - \frac{1}{p} \in (0,1)$, if $p > 1$. And Newton's method converges linearly with a rate of $1 - \frac{1}{p}$.
+
+Compared to the case that only has single zeros, which converges quadratically, multiple zero cases has a lower convergence rate, and this can be observed at the behavious of $(x_n,f(x_n))$.
+
+\subsection*{VIII-b}
+According to the problem, we instead the formula of $h(x)$ with $\tilde{h}(x) = x - p\frac{(x-\alpha)g(x)}{pg(x)+(x-\alpha)g'(x)}$.
+
+Then compared with $h'(x)$ in VIII-a, it is obvious to get $\tilde{h}'(\alpha) = 0$. Therefore, Newton's method after modification has a quadratical convergence.
+
+
+\printbibliography
+
+\end{document}
+
+
