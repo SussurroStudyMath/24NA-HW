@@ -23,6 +23,11 @@ public:
     virtual double solve(){
         double h = b - a;
         double f_min_x = F(a);
+        double f_max_x = F(b);
+        if(F(a)*F(b) > 0){
+            std::cout << "Function values of two endpoints are with the same sign!" << std::endl;
+            return 0;
+        }
         for(int i = 0; i < Maxiter; i++){
             h /= 2;
             double mid_x = a + h;
@@ -65,7 +70,7 @@ public:
                 std::cout << "Iteration stops for fabs(f(x)) < eps !" << std::endl;
                 return x;
             }
-            double d_fx = F.derivative(x0);
+            double d_fx = F.derivative(x);
             x -= f_x / d_fx;
             f_x = F(x);
         }
