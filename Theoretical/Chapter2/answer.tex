@@ -1,0 +1,189 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage[affil-it]{authblk}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 2}
+
+\author{Chen Shuo 12231064
+  \thanks{Email address: \texttt{shuo\_chen@zju.edu.cn}}}
+\affil{(Electronic Science and Technology), Zhejiang University }
+
+
+\date{Submitted time: \today}
+
+\maketitle
+% ============================================
+\section*{I}
+
+\subsection*{I-a}
+According to the linear interpolation, $p_1(f;x) = -\frac{1}{2}x + \frac{3}{2}$. $f(x) = \frac{1}{x}$ results in $f''(x) = \frac{2}{x^3}$. Therefore, the equation in the problem can be wriiten as:
+$$
+\frac{1}{x} + \frac{1}{2}x - \frac{3}{2} = \frac{1}{\xi^3(x)}(x-1)(x-2)
+$$
+In the interval $(1,2)$, we can get $\xi(x) = \sqrt[3]{2x}$.
+
+\subsection*{I-b}
+According to the continuity, we can extend $\xi(x)$ to $[1,2]$ by define $\xi(1) = \lim\limits_{x\rightarrow 1^+}\xi(x) = \sqrt[3]{2}$ and $\xi(1) = \lim\limits_{x\rightarrow 2^-}\xi(x) = \sqrt[3]{4}$. 
+Therefore, $\max\limits_{x\in[1,2]}\xi(x) = \xi(2) = \sqrt[3]{4}$, $\min\limits_{x\in[1,2]}\xi(x) = \xi(1) = \sqrt[3]{2}$.
+
+In addition, $f''(\xi(x)) = \frac{1}{x^3}$, then $\max\limits_{x\in[1,2]} f''(\xi(x)) = f''(\xi(1)) = 1$.
+\section*{II}
+Due to $f(x_i) \geq 0$ for each $i$, given $n+1$ distinct $x_i$ and their function values $\sqrt{f_i}$, a unique $\tilde{p}(x) \in \mathbb{P}_n $ can be determined. 
+
+Then $p(x) = (\tilde{p}(x))^2 \in \mathbb{P}_{2n}^+$ and $p(x)$ satisfies that $p(x_i) = f_i$ with $f_i$for each $i = 0,1,\cdots,n$.
+
+\section*{III}
+\subsection*{III-a}
+In the case that $n = 1$, $f[t,t+1] = f(t+1) - f(t) = e^{t+1} - e^t = (e-1)e^t$, which satisfies the equation in the problem.
+
+We assume that the equation holds when $n=m$, i.e. $f[t,t+1,\cdots,t+m] = \frac{(e-1)^m}{m!}e^t$, then 
+$f[t,t+1,\cdots,t+m+1] = \frac{f[t+1,t+2,\cdots,t+m+1] - f[t,t+1,\cdots,t+m]}{m+1} = \frac{1}{m+1} (\frac{(e-1)^m}{m!}e^{t+1} - \frac{(e-1)^m}{m!}e^{t}) = \frac{(e-1)^{m+1}}{(m+1)!}e^{t}$.
+
+It means that the equation also holds when $n=m+1$. By induction, the equation holds for each $n\in \mathbb{Z}^+$.
+
+\subsection*{III-b}
+According to III-a, $f[0,1,\cdots,n] = \frac{(e-1)^n}{n!}$. From Corollary 2.22 we know $\exists \xi \in (0,n)$, s.t. $f[0,1,\cdots,n] = \frac{1}{n!}f^{(n)}(\xi)$. 
+$f(x) = e^x$, so $f^{(n)}(x) = e^x$, which means $\frac{(e-1)^n}{n!} = \frac{e^{\xi}}{n!}$. Then $\xi = n \ln(e-1) > \frac{n}{2}$, $\xi$ is located to the right of the midpoint $\frac{n}{2}$.
+
+
+\section*{IV}
+\subsection*{IV-a}
+According to the data given by the problem, we can construct the following table of divided difference:
+
+$$
+\begin{array}{c|c c c c}
+  0 & 5 \\
+  1 & 3 & -2 \\
+  3 & 5 & 1 & 1 \\
+  4 & 12 & 7 & 2 & \frac{1}{4}
+\end{array}
+$$
+
+Therefore, $p_3(f;x) = 5 - 2x + x(x-1) + \frac{1}{4}x(x-1)(x-3)$.
+
+\subsection*{IV-b}
+According to the formula of $p_3(f;x)$ above, we can get $p_{3}'(f;x) = \frac{3}{4}x^2 - \frac{9}{4}$. Therefore, $p_3'(f;x)$ decreases monotonocally on $(1,\sqrt{3})$ and increases monotonocally on $(\sqrt{3},3)$, 
+which means it has a minimum at $\sqrt{3}$.
+
+\section*{V}
+\subsection*{V-a}
+According to the data given by the problem, we can construct the following table of divided difference:
+$$
+\begin{array}{c|c c c c c c}
+  0 & 0 \\
+  1 & 1 & 1 \\
+  1 & 1 & 7 & 6 \\
+  1 & 1 & 7 & 21 & 15 \\
+  2 & 128 & 127 & 120 & 99 & 42 \\
+  2 & 128 & 448 & 321 & 201 & 102 & 30
+\end{array}
+$$
+Therefore, $f[0,1,1,1,2,2] = 30$.
+
+\subsection*{V-b}
+According to Corollary 2.22, $f[0,1,1,1,2,2,] = \frac{1}{5!}f^{(5)}(\xi)$, where $\xi \in (0,2)$. $f(x) = x^7$, then $\frac{1}{5!}f^{(5)}(\xi) = 21\xi^2$. By V-a, this result is 30. 
+Therefore, $\xi = \sqrt{\frac{10}{7}}$.
+
+\section*{VI}
+\subsection*{VI-a}
+According to the data given by the problem, we can construct the following table of divided difference:
+$$
+\begin{array}{c|c c c c c}
+  0 & 1 \\
+  1 & 2 & 1 \\
+  1 & 2 & -1 & -2 \\
+  3 & 0 & -1 & 0 & \frac{2}{3} \\
+  3 & 0 & 0 & \frac{1}{2} & \frac{1}{4} & -\frac{5}{36}
+\end{array}
+$$
+Therefore, $p_4(x) = 1 + x -2x(x-1) + \frac{2}{3}x(x-1)^2 - \frac{5}{36}x(x-1)^2(x-3)$. Estimate $f(2)$ with $p_4(2) = \frac{11}{18}$
+
+\subsection*{VI-b}
+According to Theorem 2.37, the error is $f(x) - p_4(x) = \frac{f^{(5)}(\xi)}{5!}x(x-1)^2(x-3)^2$.
+
+Due to $x \in [0,3]$, $|f(x)-p_4(x)| \leq \frac{M}{5!}x(x-1)^2(x-3)^2 \leq \frac{MC}{5!}$, where $C = \max\limits_{x\in[0,3]}|x(x-1)^2(x-3)^2|$.(A continuous function has a maximum in a closed interval)
+
+\section*{VII}
+In the case $k=1$, $\Delta f(x) = f(x+h) - f(x) = hf[x,x+h]$.
+
+We assume that $\Delta^{k} f(x) = k!h^kf[x_0,\cdots,x_k]$ holds for $k=m$. Then $\Delta^{m+1}f(x) = \Delta^mf(x+h) - \Delta^mf(x) = m!h^m(f[x_1,\cdots,x_{m+1}]-f[x_0,\cdots,x_m]) 
+= m!h^m(m+1)hf[x_0,\cdots,x_{m+1}] = (m+1)!h^{m+1}f[x_0,\cdots,x_{m+1}]$, which implies that $\Delta^{k} f(x) = k!h^kf[x_0,\cdots,x_k]$ holds for $k=m+1$.By induction, the proof is done.
+
+In the case of $\nabla f(x)$, it is similar and can be proved in the same way. 
+
+\section*{VIII}
+In the case $n=1$, $\frac{\partial}{\partial x_0}f[x_0,x_1] = \frac{\partial}{\partial x_0}\frac{f(x_1)-f(x_0)}{x_1-x_0} = \frac{-f'(x_0)(x_1-x_0)+(f(x_1)-f(x_0))}{(x_1-x_0)^2} = f[x_0,x_0,x_1]$.
+
+Assume that it holds for $n=m$. Then :
+$$
+f[x_0,x_0,\cdots,x_{m+1}] = \frac{f[x_0,\cdots,x_{m+1}]-f[x_0,x_0,x_1,\cdots,x_m]}{x_{m+1}-x_0} = \frac{f[x_0,\cdots,x_{m+1}]-\frac{\partial}{\partial x_0}f[x_0,x_1,\cdots,x_m]}{x_{m+1}-x_0}
+$$
+
+\begin{align*}
+\frac{\partial}{\partial x_0}f[x_0,\cdots,x_{m+1}] &= \frac{-\frac{\partial}{\partial x}f[x_0,\cdots,x_m](x_{m+1}-x_0) + f[x_1,\cdots,x_{m+1}] - f[x_0,\cdots,x_m]}{(x_{m+1}-x_0)^2} \\
+&= \frac{f[x_0,\cdots,x_{m+1}]-\frac{\partial}{\partial x_0}f[x_0,x_1,\cdots,x_m]}{x_{m+1}-x_0}
+\end{align*}
+
+Hence $\frac{\partial}{\partial x_0}f[x_0,\cdots,x_n] = f[x_0,x_0,\cdots,x_n]$ holds for $n=m+1$. By induction, the proof is done.
+
+\section*{IX}
+By Corollary 2.48, we have
+$$
+\max\limits_{x\in[-1,1]}|x^n + a_1 x^{n-1} + \cdots + a_n| \geq \frac{1}{2^{n-1}}
+$$
+Let $\tilde{x} = \frac{b-a}{2}x + \frac{a+b}{2}$, then it follows that
+\begin{align*}
+\max\limits_{\tilde{x}\in[a,b]}|a_0\tilde{x}^n + a_1 \tilde{x}^{n-1} + \cdots + a_n|
+&= \max\limits_{x\in[-1,1]}|(\frac{b-a}{2})^nx^n + (\text{terms with degrees} < n)| \\
+&\geq \frac{(b-a)^n}{2^{2n-1}}
+\end{align*}
+The inequailty becomes equation when it is Chebyshev polynomial, therefore $\min\max\limits{x\in[a,b]}|a_0 x^n + a_1 \tilde{x}^{n-1} + \cdots + a_n| = \frac{(b-a)^n}{2^{2n-1}}$
+\section*{X}
+Suppose the equation in the problem does not hold, i.e. $\exists p \in \mathbb{P}_n^a$ s.t. $\Vert p \Vert_\infty < \Vert \hat{p}_n \Vert_\infty = \frac{1}{|T_n(a)|}$. Let $Q(x) = \hat{p}(x) - p(x)$, 
+then $Q(x_k^{'}) = \frac{(-1)^k}{T_n(a)} - p(x_k^{'})$ for $x_k^{'} = \cos\frac{k}{n}\pi$, $k=0,1,\cdots,n$. $Q(x)$ has alternating signs at these $n+1$ points in [-1,1]. Hence $Q(x)$ 
+must have $n$ zeros in [-1,1].
+
+On the other hand, $Q(x)$ is a polynomial with degree $n$ so it has at most $n$ real zeros. But $Q(a) = \hat{p}(a) - p(a) = 0$, which means $a > 1$ is also a zero not in $n$ zeros above. Therefore it is 
+a contradiction, so the equation in the problem holds.
+
+\section*{XI}
+By definition,
+\begin{align*}
+\frac{n-k}{n}b_{n,k}(t) + \frac{k+1}{n}b_{n,k+1}(t) &= \frac{n-k}{n}{n \choose k}t^k(1-t)^{n-k} + \frac{k+1}{n}t^{k+1}(1-t)^{n-k-1} \\
+&= {n-1 \choose k}t^k(1-t)^{n-k} + {n-1 \choose k}t^{k+1}(1-t)^{n-k-1} \\
+&= {n-1 \choose k}t^k(1-t)^{n-k-1}(1-t+t) \\
+&= {n-1 \choose k}t^k(1-t)^{n-k-1} \\
+&= b_{n-1,k}(t)
+\end{align*}
+
+\section*{XII}
+By definition,
+\begin{align*}
+\int_0^1 b_{n,k}(t) dt &= \int_0^1 {n \choose k}t^k(1-t)^{n-k}dt \\
+&= \frac{1}{k+1}{n \choose k} \int_0^1 (1-t)^{n-k}dt^{k+1} \\
+&= \frac{1}{k+1} {n \choose k}[((1-t)t^{k+1})|_0^1 - \int_0^1 t^{k+1} d(1-t)^{n-k}] \\
+&= \frac{n-k}{k+1}{n \choose k}\int_0^1 t^{k+1}(1-t)^{n-k-1}dt \\
+&= \int_0^1 b_{n,k+1}(t) dt
+\end{align*}
+Therefore, $\int_0^1 b_{n,k}(t) dt$ is independent of $k$. Hence,
+\begin{align*}
+\int_0^1 b_{n,k}(t) dt &= \int_0^1 b_{n,n}(t) dt \\
+&= \int_0^1 {n \choose n}t^n dt \\
+&= \frac{1}{n+1}
+\end{align*}
+\end{document}
+
+
